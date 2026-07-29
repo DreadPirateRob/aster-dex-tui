@@ -1,0 +1,62 @@
+[package]
+name = "crypto-tui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+rust_decimal = { version = "1", features = ["serde-with-str"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Async runtime with time utilities and sync primitives (watch channel)
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync"] }
+# Async WebSocket client with rustls TLS
+tokio-tungstenite = { version = "0.28", features = ["rustls-tls-native-roots"] }
+# Rustls crypto provider (required for rustls 0.23+)
+rustls = { version = "0.23", features = ["ring"] }
+# Bounded channel with drop-oldest overflow (not backpressure)
+ring-channel = "0.12"
+# Structured async-aware logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+# File appender with rotation for tracing
+tracing-appender = "0.2"
+# StreamExt/SinkExt for WebSocket stream handling
+futures-util = "0.3"
+
+# Terminal UI framework with crossterm backend
+ratatui = "0.30"
+# Async event stream for keyboard input (event-stream feature required)
+crossterm = { version = "0.28", features = ["event-stream"] }
+# Stream utilities for EventStream (FutureExt, StreamExt)
+futures = "0.3"
+
+# Async HTTP client with rustls TLS (matches WebSocket TLS backend)
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "stream"] }
+# Server-Sent Events (SSE) stream parsing for news feed
+eventsource-stream = "0.2"
+# Deserialize JSON arrays to structs (for Binance kline 12-element arrays)
+serde_tuple = "1.0"
+# Derive thiserror for error types
+thiserror = "1"
+
+# JWT creation/signing with ES256 for Coinbase authentication
+jsonwebtoken = "9"
+# ISO 8601 timestamp parsing for Coinbase trade messages
+chrono = { version = "0.4", features = ["serde"] }
+# Nonce encoding for JWT header
+base64 = "0.22"
+# Nonce generation for JWT
+uuid = { version = "1", features = ["v4"] }
+# Load environment variables from .env file
+dotenvy = "0.15"
+# HMAC-SHA256 for AsterDEX authentication (already transitive via rustls)
+ring = "0.17"
+
+[dev-dependencies]
+rust_decimal_macros = "1"
+# File modification time manipulation for cache TTL tests
+filetime = "0.2"
+# Temporary directories for cache testing
+tempfile = "3"
